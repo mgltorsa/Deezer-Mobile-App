@@ -1,6 +1,8 @@
 package com.icesi.appmoviles.reto2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
@@ -9,11 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.icesi.appmoviles.reto2.model.conection.ListDelegate;
+import com.icesi.appmoviles.reto2.model.conection.Delegate;
 import com.icesi.appmoviles.reto2.model.conection.Response;
 import com.icesi.appmoviles.reto2.model.entity.PlayList;
 import com.icesi.appmoviles.reto2.model.entity.Wraper;
@@ -22,9 +23,9 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
 
     private EditText searchEdit;
     private Button search;
-    private ListView list;
-    private ListAdapter<PlayList> adapter;
-    private ListDelegate<PlayList> delegate;
+    private RecyclerView list;
+    private PlayListAdapter adapter;
+    private Delegate<PlayList> delegate;
     private PlayList selected;
     private ImageView loading;
     private AnimationDrawable animation;
@@ -42,9 +43,11 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
         searchEdit=findViewById(R.id.search_edit);
         search=findViewById(R.id.search_button);
         list=findViewById(R.id.search_list);
-        adapter=new ListAdapter<>();
+        adapter=new PlayListAdapter(this);
+
         list.setAdapter(adapter);
-        delegate=new ListDelegate<>();
+        list.setLayoutManager(new LinearLayoutManager(this));
+        delegate=new Delegate<>();
         search.setOnClickListener((view)->{
             String name=searchEdit.getText().toString();
             searchEdit.setText("");
@@ -54,13 +57,9 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
             delegate.getList(this,PlayList.RequestListUrl +name,new TypeToken<Wraper<PlayList>>(){}.getType());
         });
 
-        list.setOnItemClickListener((parent, view, position, id) -> {
-            selected=adapter.getItem(position);
-                loading.setVisibility(View.VISIBLE);
-                animation.start();
-                delegate.getItem(MainActivity.this, PlayList.RequestItemUrl + selected.getId(), PlayList.class);
 
-        });
+
+
         back=findViewById(R.id.back);
         back.setOnClickListener((view)->{
             finish();
@@ -68,6 +67,13 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
         title=findViewById(R.id.toolbar_text);
         title.setText("Buscar Playlist");
 
+    }
+
+    public void selectPlayList(PlayList playlist){
+        selected=playlist;
+        loading.setVisibility(View.VISIBLE);
+        animation.start();
+        delegate.getItem(MainActivity.this, PlayList.RequestItemUrl + selected.getId(), PlayList.class);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +69,7 @@ public class SongActivity extends AppCompatActivity {
 
             Intent mediaPlayer=getPackageManager().getLaunchIntentForPackage(DEEZER_APP);
             Uri uri=Uri.parse(song.getLink());
-
+            Log.i("DEEZER URI", song.getLink());
             if(mediaPlayer==null){
                 mediaPlayer=new Intent(Intent.ACTION_VIEW,uri);
             }else{
@@ -85,7 +86,12 @@ public class SongActivity extends AppCompatActivity {
     }
 
     public void loadImage(File imageFile){
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.toString());
-        this.image.setImageBitmap(bitmap);
+        runOnUiThread(()->{
+
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.toString());
+            this.image.setImageBitmap(bitmap);
+
+        });
+
     }
 }

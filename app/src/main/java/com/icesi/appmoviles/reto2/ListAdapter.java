@@ -21,8 +21,8 @@ public class ListAdapter<T extends Item> extends BaseAdapter {
 
     private List<T> playLists;
 
-    public ListAdapter(){
-        playLists=new ArrayList<T>();
+    public ListAdapter() {
+        playLists = new ArrayList<T>();
     }
 
     @Override
@@ -42,25 +42,25 @@ public class ListAdapter<T extends Item> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        View rootView=inflater.inflate(R.layout.list_item,null);
-        TextView field1=rootView.findViewById(R.id.field1);
-        TextView field2=rootView.findViewById(R.id.field2);
-        TextView field3=rootView.findViewById(R.id.field3);
-        ImageView imageRow=rootView.findViewById(R.id.image_item);
-        T item=playLists.get(position);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View rootView = inflater.inflate(R.layout.list_item, null);
+        TextView field1 = rootView.findViewById(R.id.field1);
+        TextView field2 = rootView.findViewById(R.id.field2);
+        TextView field3 = rootView.findViewById(R.id.field3);
+        ImageView imageRow = rootView.findViewById(R.id.image_item);
+        T item = playLists.get(position);
         field1.setText(item.getField1());
         field2.setText(item.getField2());
         field3.setText(item.getField3());
 
-        File imageCache = new File(parent.getContext().getExternalCacheDir()+"/"+item.getField1());
-        if(imageCache.exists()){
+        File imageCache = new File(parent.getContext().getExternalCacheDir() + "/" + item.getField1());
+        if (imageCache.exists()) {
             loadImage(imageRow, imageCache);
-        }else{
-            new Thread(()->{
+        } else {
+            new Thread(() -> {
                 HTTPSWebUtilDomi webUtil = new HTTPSWebUtilDomi();
                 webUtil.saveURLImageOnFile(item.getPicture(), imageCache);
-                rootView.post(()->{
+                rootView.post(() -> {
                     loadImage(imageRow, imageCache);
                 });
             }).start();
@@ -70,12 +70,14 @@ public class ListAdapter<T extends Item> extends BaseAdapter {
         return rootView;
     }
 
-    public void loadImage(ImageView imageRow, File imageFile){
+    public void loadImage(ImageView imageRow, File imageFile) {
+
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.toString());
         imageRow.setImageBitmap(bitmap);
+
     }
 
-    public void addItem(T item){
+    public void addItem(T item) {
         playLists.add(item);
         this.notifyDataSetChanged();
     }
@@ -84,8 +86,9 @@ public class ListAdapter<T extends Item> extends BaseAdapter {
         playLists.clear();
         this.notifyDataSetChanged();
     }
-    public void setList(List<T> list){
-        playLists=list;
+
+    public void setList(List<T> list) {
+        playLists = list;
         this.notifyDataSetChanged();
     }
 }

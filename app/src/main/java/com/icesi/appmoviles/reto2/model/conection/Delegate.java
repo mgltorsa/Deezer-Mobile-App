@@ -17,7 +17,7 @@ import java.net.URLConnection;
 import java.util.List;
 
 
-public class ListDelegate<T extends Item> {
+public class Delegate<T extends Item> {
 
     private Thread list;
     private Thread item;
@@ -32,9 +32,12 @@ public class ListDelegate<T extends Item> {
                 String data = conection.GETrequest(ur);
                 Gson gson = new Gson();
                 T object = gson.fromJson(data, type);
+                response.finishRequest();
                 response.setItem(object);
-            } catch (Exception e) {
 
+            } catch (Exception e) {
+                Log.e("ERROR", e.getMessage(),e);
+                
             }
 
         });

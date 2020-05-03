@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
-import com.icesi.appmoviles.reto2.model.conection.ListDelegate;
+import com.icesi.appmoviles.reto2.model.conection.Delegate;
 import com.icesi.appmoviles.reto2.model.conection.Response;
 import com.icesi.appmoviles.reto2.model.entity.PlayList;
 import com.icesi.appmoviles.reto2.model.entity.Song;
@@ -34,7 +34,7 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
     private ListAdapter<Song> adapter;
     private ListView list;
     private AnimationDrawable animation;
-    private ListDelegate<Song> songListDelegate;
+    private Delegate<Song> songListDelegate;
     private TextView title;
     private Button back;
 
@@ -43,7 +43,7 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song_list);
-        songListDelegate=new ListDelegate<>();
+        songListDelegate=new Delegate<>();
         loading=findViewById(R.id.loading_song);
         loading.setBackgroundResource(R.drawable.loading);
         animation=(AnimationDrawable) loading.getBackground();
@@ -92,8 +92,10 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
     }
 
     public void loadImage(File imageCache){
-        Bitmap bitmap = BitmapFactory.decodeFile(imageCache.toString());
-        this.imagePlay.setImageBitmap(bitmap);
+        runOnUiThread(()-> {
+            Bitmap bitmap = BitmapFactory.decodeFile(imageCache.toString());
+            this.imagePlay.setImageBitmap(bitmap);
+        });
     }
 
     private void showPlayList(PlayList playList) {
