@@ -74,7 +74,6 @@ public class Song implements Item {
 
         SimpleDateFormat fdf=new SimpleDateFormat("yyyy");
 
-        Log.e("long equeal d",time_add+" "+title+(tmp.getTime()==time_add?"true":"false"));
 
         return fdf.format(tmp);
     }
