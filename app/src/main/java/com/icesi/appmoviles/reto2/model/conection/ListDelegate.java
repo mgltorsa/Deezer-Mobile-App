@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 
 public class ListDelegate<T extends Item> {
@@ -56,22 +57,10 @@ public class ListDelegate<T extends Item> {
                 Gson gson = new Gson();
 
                 Wraper<T> dat = gson.fromJson(data, type);
-                for (T req : dat.getData()) {
-                    String urlI = req.getPicture();
-                    if(urlI!=null){
-                        URL _url = new URL(urlI);
-                        URLConnection connection = _url.openConnection();
-                        connection.connect();
-                        InputStream reader = connection.getInputStream();
-                        BufferedInputStream inputStream = new BufferedInputStream(reader);
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        inputStream.close();
-                        req.setImage(bitmap);
-                        Log.e("data", req.getField1());
-                        response.addItemInList(req);
-                    }
-
+                for (T it:dat.getData()){
+                    getImage(it,response);
                 }
+
                 response.finishRequest();
             } catch (Exception e) {
 
@@ -80,6 +69,46 @@ public class ListDelegate<T extends Item> {
         list.start();
 
     }
+
+    private void getImage(T req,Response<T> response)throws Exception{
+            String urlI = req.getPicture();
+            if(urlI!=null){
+                URL _url = new URL(urlI);
+                URLConnection connection = _url.openConnection();
+                connection.connect();
+                InputStream reader = connection.getInputStream();
+                BufferedInputStream inputStream = new BufferedInputStream(reader);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                inputStream.close();
+                req.setImage(bitmap);
+                Log.e("data", req.getField1());
+                response.addItemInList(req);
+            }
+
+
+    }
+
+    public void updateItems(List<T> items, Response<T> response, String url, Type type){
+
+        new Thread(()->{
+            try {
+                for (T item:items){
+                    HTTPSWebUtilDomi http=new HTTPSWebUtilDomi();
+                    String data=http.GETrequest(url+item.getId());
+                    Gson gson=new Gson();
+                    T object=gson.fromJson(data,type);
+                    item.copy(object);
+                    getImage(item,response);
+                }
+                response.finishRequest();
+            }catch (Exception e){
+
+            }
+        }).start();
+
+    }
+
+
 
 
 }

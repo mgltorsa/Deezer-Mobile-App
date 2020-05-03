@@ -2,9 +2,10 @@ package com.icesi.appmoviles.reto2.model.entity;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Wraper<T extends Item> {
+public class Wraper<T extends Item> implements Serializable {
         private List<T> data;
 
         public Wraper(){
@@ -14,6 +15,7 @@ public class Wraper<T extends Item> {
         public List<T> getData() {
                 return data;
         }
+
 
         public void setData(List<T> data) {
                 this.data = data;

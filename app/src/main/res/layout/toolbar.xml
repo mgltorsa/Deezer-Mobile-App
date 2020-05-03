@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/back"
+                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTintMode="multiply" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="title"
+                android:textSize="4mm"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/toolbar_text"/>
+        </LinearLayout>
+    </Toolbar>
+</LinearLayout>

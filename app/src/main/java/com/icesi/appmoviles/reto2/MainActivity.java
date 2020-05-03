@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
     private PlayList selected;
     private ImageView loading;
     private AnimationDrawable animation;
+    private Button back;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +58,24 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
 
         list.setOnItemClickListener((parent, view, position, id) -> {
             selected=adapter.getItem(position);
-            loading.setVisibility(View.VISIBLE);
-            animation.start();
-            Toast.makeText(MainActivity.this,"Clicked "+selected.getTitle(),Toast.LENGTH_LONG).show();
-            delegate.getItem(MainActivity.this,PlayList.RequestItemUrl+selected.getId(),PlayList.class);
+            if(selected.getDescription()!=null){
+                Intent i=new Intent(MainActivity.this, SongListActivity.class);
+                i.putExtra("playList",selected);
+                Toast.makeText(this,"Desc",Toast.LENGTH_LONG).show();
+                i.putExtra("image",new BitMapSerializable(selected.getImage()));
+                startActivity(i);
+            }else {
+                loading.setVisibility(View.VISIBLE);
+                animation.start();
+                delegate.getItem(MainActivity.this, PlayList.RequestItemUrl + selected.getId(), PlayList.class);
+            }
         });
+        back=findViewById(R.id.back);
+        back.setOnClickListener((view)->{
+            finish();
+        });
+        title=findViewById(R.id.toolbar_text);
+        title.setText("Buscar Playlist");
 
     }
 
@@ -74,12 +90,10 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
     @Override
     public void setItem(PlayList response) {
         runOnUiThread(()->{
-            Toast.makeText(MainActivity.this,"StartActivity",Toast.LENGTH_LONG).show();
-            Intent i=new Intent(MainActivity.this,SongActivity.class);
-            i.putExtra("playList",response);
-            i.putExtra("image",new BitMapSerializable(selected.getImage()));
+            Intent i=new Intent(MainActivity.this, SongListActivity.class);
+            selected.copy(response);
+            i.putExtra("playList",selected);
             startActivity(i);
-            finish();
         });
 
     }

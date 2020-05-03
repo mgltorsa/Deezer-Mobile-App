@@ -15,10 +15,31 @@ public class PlayList implements Item{
     private User user;
     private String tracklist;
     private int nb_tracks;
+    private BitMapSerializable image;
+
     private int fans;
+    private Wraper<Song> tracks;
 
     public PlayList(){
 
+    }
+    public void copy(PlayList playList){
+        title=playList.title;
+        description=playList.description;
+        picture=playList.picture;
+        user=playList.user;
+        tracklist=playList.tracklist;
+        nb_tracks=playList.nb_tracks;
+        image=playList.image;
+        fans=playList.fans;
+        tracks=playList.tracks;
+    }
+    public Wraper<Song> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Wraper<Song> tracks) {
+        this.tracks = tracks;
     }
 
     public String getTracklist() {
@@ -61,14 +82,13 @@ public class PlayList implements Item{
     }
 
     public Bitmap getImage() {
-        return image;
+        return image.getBitMap();
     }
 
     public void setImage(Bitmap image) {
-        this.image = image;
+        this.image =new BitMapSerializable(image);
     }
 
-    private Bitmap image;
 
 
     public String getTitle() {
@@ -91,6 +111,11 @@ public class PlayList implements Item{
         return picture;
     }
 
+    @Override
+    public void copy(Item item) {
+        return ;
+    }
+
     public void setPicture(String picture) {
         this.picture = picture;
     }
@@ -110,6 +135,7 @@ public class PlayList implements Item{
     public void setNb_tracks(int nb_tracks) {
         this.nb_tracks = nb_tracks;
     }
+
 
     @NonNull
     @Override

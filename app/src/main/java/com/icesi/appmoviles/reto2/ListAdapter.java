@@ -1,6 +1,5 @@
 package com.icesi.appmoviles.reto2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +61,10 @@ public class ListAdapter<T extends Item> extends BaseAdapter {
 
     public void clear() {
         playLists.clear();
+        this.notifyDataSetChanged();
+    }
+    public void setList(List<T> list){
+        playLists=list;
         this.notifyDataSetChanged();
     }
 }

@@ -2,87 +2,59 @@ package com.icesi.appmoviles.reto2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.AnimationDrawable;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
-import com.icesi.appmoviles.reto2.model.conection.ListDelegate;
-import com.icesi.appmoviles.reto2.model.conection.Response;
-import com.icesi.appmoviles.reto2.model.entity.BitMapSerializable;
-import com.icesi.appmoviles.reto2.model.entity.PlayList;
 import com.icesi.appmoviles.reto2.model.entity.Song;
-import com.icesi.appmoviles.reto2.model.entity.Wraper;
 
-import java.lang.reflect.Type;
+public class SongActivity extends AppCompatActivity {
 
-public class SongActivity extends AppCompatActivity implements Response<Song> {
-
-    private ImageView imagePlay;
-    private ImageView loading;
-    private TextView namePlay;
-    private TextView descPlay;
-    private TextView songsPlay;
-    private TextView followPlay;
-    private ListAdapter<Song> adapter;
-    private ListView list;
-    private AnimationDrawable animation;
-    private ListDelegate<Song> songListDelegate;
+    private ImageView image;
+    private TextView name;
+    private TextView albumName;
+    private TextView artistName;
+    private TextView duration;
+    private Button listen;
+    private TextView title;
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
-        songListDelegate=new ListDelegate<>();
-        loading=findViewById(R.id.loading_song);
-        loading.setBackgroundResource(R.drawable.loading);
-        animation=(AnimationDrawable) loading.getBackground();
-        loading.setVisibility(View.VISIBLE);
-        animation.start();
-        imagePlay=findViewById(R.id.image_play);
-        namePlay=findViewById(R.id.name_play);
-        descPlay=findViewById(R.id.desc_play);
-        songsPlay=findViewById(R.id.songs);
-        followPlay =findViewById(R.id.follows);
-        list=findViewById(R.id.song_list);
-        adapter=new ListAdapter<>();
-        PlayList playList=(PlayList)this.getIntent().getExtras().getSerializable("playList");
-        BitMapSerializable image=(BitMapSerializable)this.getIntent().getExtras().getSerializable("image");
-        playList.setImage(image.getBitMap());
-        showPlayList(playList);
-        list.setAdapter(adapter);
-        Type type=new  TypeToken< Wraper<Song> >(){}.getType();
-        songListDelegate.getList(this,playList.getTracklist(),type);
-    }
+        Song song=(Song)this.getIntent().getExtras().getSerializable("song");
+        image=findViewById(R.id.image_song);
+        image.setImageBitmap(song.getImage());
+        name=findViewById(R.id.song_name);
+        name.setText(song.getTitle());
+        albumName=findViewById(R.id.album_name);
+        albumName.setText(song.getAlbum().getTitle());
+        artistName=findViewById(R.id.artist_name);
+        artistName.setText(song.getArtist().getName());
+        duration=findViewById(R.id.song_time);
+        duration.setText(song.getDuration()+" Segundos");
+        listen=findViewById(R.id.listen);
 
-    private void showPlayList(PlayList playList) {
-        imagePlay.setImageBitmap(playList.getImage());
-        namePlay.setText(playList.getTitle());
-        descPlay.setText(playList.getDescription());
-        songsPlay.setText(playList.getNb_tracks()+" Canciones");
-        followPlay.setText(playList.getFans()+" fans");
-
-    }
-
-    @Override
-    public void addItemInList(Song item) {
-        runOnUiThread(()->{
-            adapter.addItem(item);
+        listen.setOnClickListener((view)->{
+            Toast.makeText(this,"Listen",Toast.LENGTH_LONG).show();
+            String dezeer="deezer.android.app";
+            Intent mediaPlayer=getPackageManager().getLaunchIntentForPackage(dezeer);
+            if(mediaPlayer==null){
+                Uri uri=Uri.parse(song.getLink());
+                mediaPlayer=new Intent(Intent.ACTION_VIEW,uri);
+            }
+            startActivity(mediaPlayer);
         });
-    }
-
-    @Override
-    public void setItem(Song response) {
-
-    }
-
-    @Override
-    public void finishRequest() {
-        animation.stop();
-        loading.setVisibility(View.INVISIBLE);
-
+        back=findViewById(R.id.back);
+        back.setOnClickListener((view)->{
+            finish();
+        });
+        title=findViewById(R.id.toolbar_text);
+        title.setText("Ver canción");
     }
 }

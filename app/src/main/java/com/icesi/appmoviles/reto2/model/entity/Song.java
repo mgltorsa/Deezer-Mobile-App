@@ -1,20 +1,52 @@
 package com.icesi.appmoviles.reto2.model.entity;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Song implements Item {
 
+    public static final String ITEM_URL="https://api.deezer.com/track/";
+
+    private String id;
     private String title;
     private String duration;
+    private String link;
     private Date release_date;
     private Artist artist;
+    private long time_add;
     private Album album;
 
     public Song(){
 
     }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getTime_add() {
+        return time_add;
+    }
+
+    public void setTime_add(long time_add) {
+        this.time_add = time_add;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -35,7 +67,16 @@ public class Song implements Item {
 
     @Override
     public String getField3() {
-        return release_date.getYear()+"";
+        Date tmp=release_date;
+        if(tmp==null){
+            tmp=new Date(time_add);
+        }
+
+        SimpleDateFormat fdf=new SimpleDateFormat("yyyy");
+
+        Log.e("long equeal d",time_add+" "+title+(tmp.getTime()==time_add?"true":"false"));
+
+        return fdf.format(tmp);
     }
 
     @Override
@@ -44,7 +85,18 @@ public class Song implements Item {
     }
 
     public String getPicture() {
-        return album.getCover_small();
+        return album.getCover_medium();
+    }
+
+    @Override
+    public void copy(Item item) {
+        Song newS=(Song)item;
+        setAlbum(newS.album);
+        setArtist(newS.artist);
+        setDuration(newS.duration);
+        setId(newS.id);
+        setRelease_date(newS.release_date);
+        setTitle(newS.title);
     }
 
     @Override
