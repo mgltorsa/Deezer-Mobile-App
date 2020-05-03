@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListAdapter<T extends Item> extends BaseAdapter {
+public class SongsListAdapter<T extends Item> extends BaseAdapter {
 
     private List<T> playLists;
 
-    public ListAdapter() {
+    public SongsListAdapter() {
         playLists = new ArrayList<T>();
     }
 

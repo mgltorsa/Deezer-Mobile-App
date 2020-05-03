@@ -71,7 +71,7 @@ public class Delegate<T extends Item> {
 
 
 
-    public void updateItems(List<T> items, Response<T> response, String url, Type type){
+    public void getSongs(List<T> items, Response<T> response, String url, Type type){
 
         new Thread(()->{
             try {

@@ -31,7 +31,7 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
     private TextView descPlay;
     private TextView songsPlay;
     private TextView followPlay;
-    private ListAdapter<Song> adapter;
+    private SongsListAdapter<Song> adapter;
     private ListView list;
     private AnimationDrawable animation;
     private Delegate<Song> songListDelegate;
@@ -55,7 +55,7 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
         songsPlay=findViewById(R.id.songs);
         followPlay =findViewById(R.id.follows);
         list=findViewById(R.id.song_list);
-        adapter=new ListAdapter<>();
+        adapter=new SongsListAdapter<>();
         PlayList playList=(PlayList)this.getIntent().getExtras().getSerializable("playList");
 
         File imageCache = new File(getExternalCacheDir()+"/"+playList.getTitle());
@@ -74,8 +74,8 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
 
         list.setAdapter(adapter);
         adapter.setList(playList.getTracks().getData());
-        Type type=new  TypeToken< Song >(){}.getType();
-        songListDelegate.updateItems(playList.getTracks().getData(),this,Song.ITEM_URL,type);
+        Type type=new TypeToken< Song >(){}.getType();
+        songListDelegate.getSongs(playList.getTracks().getData(),this,Song.ITEM_URL,type);
 
         list.setOnItemClickListener((parent, view, position, id) -> {
             Song song=adapter.getItem(position);

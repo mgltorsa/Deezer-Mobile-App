@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,7 +22,8 @@ import java.io.File;
 
 public class SongActivity extends AppCompatActivity {
 
-    private final String DEEZER_APP="deezer.android.app";
+    //REVIEW:
+    /*private final String DEEZER_APP="deezer.android.app";*/
 
     private ImageView image;
     private TextView name;
@@ -65,16 +67,12 @@ public class SongActivity extends AppCompatActivity {
         listen=findViewById(R.id.listen);
 
         listen.setOnClickListener((view)->{
+            
+            Uri uri=Uri.parse(getLink(song));
+            Log.i("DEEZER URI", uri.toString());
 
+            Intent mediaPlayer = new Intent(Intent.ACTION_VIEW, uri);
 
-            Intent mediaPlayer=getPackageManager().getLaunchIntentForPackage(DEEZER_APP);
-            Uri uri=Uri.parse(song.getLink());
-            Log.i("DEEZER URI", song.getLink());
-            if(mediaPlayer==null){
-                mediaPlayer=new Intent(Intent.ACTION_VIEW,uri);
-            }else{
-                mediaPlayer.setData(uri);
-            }
             startActivity(mediaPlayer);
         });
         back=findViewById(R.id.back);
@@ -83,6 +81,10 @@ public class SongActivity extends AppCompatActivity {
         });
         title=findViewById(R.id.toolbar_text);
         title.setText("Ver canción");
+    }
+
+    public String getLink(Song song){
+        return "deezer://www.deezer.com/track/"+song.getId();
     }
 
     public void loadImage(File imageFile){
