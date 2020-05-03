@@ -58,17 +58,10 @@ public class MainActivity extends AppCompatActivity implements Response<PlayList
 
         list.setOnItemClickListener((parent, view, position, id) -> {
             selected=adapter.getItem(position);
-            if(selected.getDescription()!=null){
-                Intent i=new Intent(MainActivity.this, SongListActivity.class);
-                i.putExtra("playList",selected);
-                Toast.makeText(this,"Desc",Toast.LENGTH_LONG).show();
-                i.putExtra("image",new BitMapSerializable(selected.getImage()));
-                startActivity(i);
-            }else {
                 loading.setVisibility(View.VISIBLE);
                 animation.start();
                 delegate.getItem(MainActivity.this, PlayList.RequestItemUrl + selected.getId(), PlayList.class);
-            }
+
         });
         back=findViewById(R.id.back);
         back.setOnClickListener((view)->{

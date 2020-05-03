@@ -28,13 +28,10 @@ public class ListDelegate<T extends Item> {
         }
         item=new Thread(() -> {
             try {
-                Log.e("getItem", "Start");
                 HTTPSWebUtilDomi conection = new HTTPSWebUtilDomi();
                 String data = conection.GETrequest(ur);
-                Log.e("getItem data", data);
                 Gson gson = new Gson();
                 T object = gson.fromJson(data, type);
-                Log.e("getItem object", object.getField1());
                 response.setItem(object);
             } catch (Exception e) {
 
@@ -51,9 +48,7 @@ public class ListDelegate<T extends Item> {
         list=new Thread(() -> {
             HTTPSWebUtilDomi conection = new HTTPSWebUtilDomi();
             try {
-                Log.e("connection", "conecting");
                 String data = conection.GETrequest(url);
-                Log.e("connection", "conected");
                 Gson gson = new Gson();
 
                 Wraper<T> dat = gson.fromJson(data, type);
@@ -81,7 +76,6 @@ public class ListDelegate<T extends Item> {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 inputStream.close();
                 req.setImage(bitmap);
-                Log.e("data", req.getField1());
                 response.addItemInList(req);
             }
 

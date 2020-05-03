@@ -41,7 +41,6 @@ public class SongActivity extends AppCompatActivity {
         listen=findViewById(R.id.listen);
 
         listen.setOnClickListener((view)->{
-            Toast.makeText(this,"Listen",Toast.LENGTH_LONG).show();
             String dezeer="deezer.android.app";
             Intent mediaPlayer=getPackageManager().getLaunchIntentForPackage(dezeer);
             if(mediaPlayer==null){

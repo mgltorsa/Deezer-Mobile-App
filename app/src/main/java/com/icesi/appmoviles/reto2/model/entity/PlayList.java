@@ -24,13 +24,9 @@ public class PlayList implements Item{
 
     }
     public void copy(PlayList playList){
-        title=playList.title;
         description=playList.description;
-        picture=playList.picture;
-        user=playList.user;
         tracklist=playList.tracklist;
         nb_tracks=playList.nb_tracks;
-        image=playList.image;
         fans=playList.fans;
         tracks=playList.tracks;
     }
