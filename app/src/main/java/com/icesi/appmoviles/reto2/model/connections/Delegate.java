@@ -1,19 +1,13 @@
-package com.icesi.appmoviles.reto2.model.conection;
+package com.icesi.appmoviles.reto2.model.connections;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.icesi.appmoviles.reto2.model.entity.Item;
-import com.icesi.appmoviles.reto2.model.entity.Wraper;
+import com.icesi.appmoviles.reto2.model.entities.Item;
+import com.icesi.appmoviles.reto2.model.entities.Wraper;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 

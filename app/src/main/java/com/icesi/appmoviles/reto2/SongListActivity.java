@@ -14,11 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
-import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
-import com.icesi.appmoviles.reto2.model.conection.Delegate;
-import com.icesi.appmoviles.reto2.model.conection.Response;
-import com.icesi.appmoviles.reto2.model.entity.PlayList;
-import com.icesi.appmoviles.reto2.model.entity.Song;
+import com.icesi.appmoviles.reto2.model.connections.HTTPSWebUtilDomi;
+import com.icesi.appmoviles.reto2.model.connections.Delegate;
+import com.icesi.appmoviles.reto2.model.connections.Response;
+import com.icesi.appmoviles.reto2.model.entities.PlayList;
+import com.icesi.appmoviles.reto2.model.entities.Song;
 
 import java.io.File;
 import java.lang.reflect.Type;

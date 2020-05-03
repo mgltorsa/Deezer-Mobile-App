@@ -1,4 +1,4 @@
-package com.icesi.appmoviles.reto2.model.conection;
+package com.icesi.appmoviles.reto2.model.connections;
 
 import android.util.Log;
 

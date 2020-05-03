@@ -1,6 +1,6 @@
-package com.icesi.appmoviles.reto2.model.conection;
+package com.icesi.appmoviles.reto2.model.connections;
 
-import com.icesi.appmoviles.reto2.model.entity.Item;
+import com.icesi.appmoviles.reto2.model.entities.Item;
 
 
 public interface Response<T extends Item> {

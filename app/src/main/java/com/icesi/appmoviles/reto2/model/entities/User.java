@@ -1,4 +1,4 @@
-package com.icesi.appmoviles.reto2.model.entity;
+package com.icesi.appmoviles.reto2.model.entities;
 
 import java.io.Serializable;
 

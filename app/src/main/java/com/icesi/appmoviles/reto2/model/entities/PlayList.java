@@ -1,6 +1,4 @@
-package com.icesi.appmoviles.reto2.model.entity;
-
-import android.graphics.Bitmap;
+package com.icesi.appmoviles.reto2.model.entities;
 
 import androidx.annotation.NonNull;
 

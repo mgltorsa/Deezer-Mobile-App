@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
-import com.icesi.appmoviles.reto2.model.entity.Item;
-import com.icesi.appmoviles.reto2.model.entity.PlayList;
+import com.icesi.appmoviles.reto2.model.connections.HTTPSWebUtilDomi;
+import com.icesi.appmoviles.reto2.model.entities.Item;
+import com.icesi.appmoviles.reto2.model.entities.PlayList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ public class PlayListAdapter<T extends Item> extends RecyclerView.Adapter<PlayLi
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View rootView = inflater.inflate(R.layout.list_item, null);
 
+
         CustomViewHolder vh = new CustomViewHolder(rootView, activity);
 
         return vh;
@@ -57,6 +58,8 @@ public class PlayListAdapter<T extends Item> extends RecyclerView.Adapter<PlayLi
         if (imageCache.exists()) {
             loadImage(holder, imageCache);
         } else {
+
+
             new Thread(() -> {
                 HTTPSWebUtilDomi webUtil = new HTTPSWebUtilDomi();
                 webUtil.saveURLImageOnFile(item.getPicture(), imageCache);
@@ -84,8 +87,15 @@ public class PlayListAdapter<T extends Item> extends RecyclerView.Adapter<PlayLi
 
 
     public void loadImage(CustomViewHolder holder, File imageFile){
-        Bitmap bitmap = BitmapFactory.decodeFile(imageFile.toString());
-        holder.imageView.setImageBitmap(bitmap);
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFile.toString());
+                holder.imageView.setImageBitmap(bitmap);
+            }
+        });
+
     }
 
 
@@ -111,8 +121,8 @@ public class PlayListAdapter<T extends Item> extends RecyclerView.Adapter<PlayLi
             view.setOnClickListener(view1 -> {
                 activity.selectPlayList((PlayList)item);
             });
-        }
 
+        }
 
     }
 

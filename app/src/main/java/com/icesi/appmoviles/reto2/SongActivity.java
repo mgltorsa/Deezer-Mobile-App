@@ -2,9 +2,7 @@ package com.icesi.appmoviles.reto2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -13,17 +11,15 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
-import com.icesi.appmoviles.reto2.model.entity.Song;
+import com.icesi.appmoviles.reto2.model.connections.HTTPSWebUtilDomi;
+import com.icesi.appmoviles.reto2.model.entities.Song;
 
 import java.io.File;
 
 public class SongActivity extends AppCompatActivity {
 
-    //REVIEW:
-    /*private final String DEEZER_APP="deezer.android.app";*/
+    private final String DEEZER_APP="deezer.android.app";
 
     private ImageView image;
     private TextView name;
@@ -67,14 +63,14 @@ public class SongActivity extends AppCompatActivity {
         listen=findViewById(R.id.listen);
 
         listen.setOnClickListener((view)->{
-            
+
+
             Uri uri=Uri.parse(getLink(song));
-            Log.i("DEEZER URI", uri.toString());
-
-            Intent mediaPlayer = new Intent(Intent.ACTION_VIEW, uri);
-
+            Log.i("DEEZER URI", song.getLink());
+            Intent mediaPlayer=new Intent(Intent.ACTION_VIEW,uri);
             startActivity(mediaPlayer);
         });
+
         back=findViewById(R.id.back);
         back.setOnClickListener((view)->{
             finish();

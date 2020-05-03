@@ -1,7 +1,4 @@
-package com.icesi.appmoviles.reto2.model.entity;
-
-import android.graphics.Bitmap;
-import android.util.Log;
+package com.icesi.appmoviles.reto2.model.entities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

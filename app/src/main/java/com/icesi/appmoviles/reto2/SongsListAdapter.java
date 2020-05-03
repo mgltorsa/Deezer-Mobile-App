@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
-import com.icesi.appmoviles.reto2.model.entity.Item;
+import com.icesi.appmoviles.reto2.model.connections.HTTPSWebUtilDomi;
+import com.icesi.appmoviles.reto2.model.entities.Item;
 
 import java.io.File;
 import java.util.ArrayList;
