@@ -3,6 +3,8 @@ package com.icesi.appmoviles.reto2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +14,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.icesi.appmoviles.reto2.model.conection.HTTPSWebUtilDomi;
 import com.icesi.appmoviles.reto2.model.conection.ListDelegate;
 import com.icesi.appmoviles.reto2.model.conection.Response;
-import com.icesi.appmoviles.reto2.model.entity.BitMapSerializable;
 import com.icesi.appmoviles.reto2.model.entity.PlayList;
 import com.icesi.appmoviles.reto2.model.entity.Song;
 
+import java.io.File;
 import java.lang.reflect.Type;
 
 public class SongListActivity extends AppCompatActivity implements Response<Song> {
@@ -54,7 +57,19 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
         list=findViewById(R.id.song_list);
         adapter=new ListAdapter<>();
         PlayList playList=(PlayList)this.getIntent().getExtras().getSerializable("playList");
-        playList.setImage(playList.getImage());
+
+        File imageCache = new File(getExternalCacheDir()+"/"+playList.getTitle());
+
+        if(imageCache.exists()){
+            loadImage(imageCache);
+        }else{
+            new Thread(()->{
+                HTTPSWebUtilDomi webUtils = new HTTPSWebUtilDomi();
+                webUtils.saveURLImageOnFile(playList.getPicture(), imageCache);
+                loadImage(imageCache);
+            }).start();
+        }
+
         showPlayList(playList);
 
         list.setAdapter(adapter);
@@ -76,8 +91,12 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
         title.setText("Buscar Playlist");
     }
 
+    public void loadImage(File imageCache){
+        Bitmap bitmap = BitmapFactory.decodeFile(imageCache.toString());
+        this.imagePlay.setImageBitmap(bitmap);
+    }
+
     private void showPlayList(PlayList playList) {
-        imagePlay.setImageBitmap(playList.getImage());
         namePlay.setText(playList.getTitle());
         descPlay.setText(playList.getDescription());
         songsPlay.setText(playList.getNb_tracks()+" Canciones");

@@ -15,7 +15,6 @@ public class PlayList implements Item{
     private User user;
     private String tracklist;
     private int nb_tracks;
-    private BitMapSerializable image;
 
     private int fans;
     private Wraper<Song> tracks;
@@ -76,16 +75,6 @@ public class PlayList implements Item{
     public String getField3() {
         return ""+nb_tracks;
     }
-
-    public Bitmap getImage() {
-        return image.getBitMap();
-    }
-
-    public void setImage(Bitmap image) {
-        this.image =new BitMapSerializable(image);
-    }
-
-
 
     public String getTitle() {
         return title;

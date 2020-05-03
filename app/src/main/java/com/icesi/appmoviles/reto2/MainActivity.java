@@ -11,12 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.icesi.appmoviles.reto2.model.conection.ListDelegate;
 import com.icesi.appmoviles.reto2.model.conection.Response;
-import com.icesi.appmoviles.reto2.model.entity.BitMapSerializable;
 import com.icesi.appmoviles.reto2.model.entity.PlayList;
 import com.icesi.appmoviles.reto2.model.entity.Wraper;
 

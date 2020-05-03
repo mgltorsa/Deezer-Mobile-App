@@ -7,19 +7,12 @@ import java.io.Serializable;
 public class Album implements Serializable {
     private String title;
     private String cover_small;
-    private BitMapSerializable image;
     private String cover_medium;
     public Album(){
 
     }
 
-    public Bitmap getImage() {
-        return image==null?null:image.getBitMap();
-    }
 
-    public void setImage(Bitmap image) {
-        this.image = new BitMapSerializable(image);
-    }
 
     public String getCover_small() {
         return cover_small;

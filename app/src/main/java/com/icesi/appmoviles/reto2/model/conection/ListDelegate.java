@@ -53,7 +53,8 @@ public class ListDelegate<T extends Item> {
 
                 Wraper<T> dat = gson.fromJson(data, type);
                 for (T it:dat.getData()){
-                    getImage(it,response);
+                    response.addItemInList(it);
+
                 }
 
                 response.finishRequest();
@@ -65,22 +66,7 @@ public class ListDelegate<T extends Item> {
 
     }
 
-    private void getImage(T req,Response<T> response)throws Exception{
-            String urlI = req.getPicture();
-            if(urlI!=null){
-                URL _url = new URL(urlI);
-                URLConnection connection = _url.openConnection();
-                connection.connect();
-                InputStream reader = connection.getInputStream();
-                BufferedInputStream inputStream = new BufferedInputStream(reader);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                inputStream.close();
-                req.setImage(bitmap);
-                response.addItemInList(req);
-            }
 
-
-    }
 
     public void updateItems(List<T> items, Response<T> response, String url, Type type){
 
@@ -92,7 +78,8 @@ public class ListDelegate<T extends Item> {
                     Gson gson=new Gson();
                     T object=gson.fromJson(data,type);
                     item.copy(object);
-                    getImage(item,response);
+                    response.addItemInList(item);
+
                 }
                 response.finishRequest();
             }catch (Exception e){

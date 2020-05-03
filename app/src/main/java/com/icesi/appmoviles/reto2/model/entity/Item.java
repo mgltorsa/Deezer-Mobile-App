@@ -10,8 +10,6 @@ public interface Item extends Serializable {
      String getField1();
      String getField2();
      String getField3();
-     Bitmap getImage();
      String getPicture();
      void copy(Item item);
-     void setImage(Bitmap image);
 }

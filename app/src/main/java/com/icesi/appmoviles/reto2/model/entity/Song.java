@@ -78,10 +78,6 @@ public class Song implements Item {
         return fdf.format(tmp);
     }
 
-    @Override
-    public Bitmap getImage() {
-        return album.getImage();
-    }
 
     public String getPicture() {
         return album.getCover_medium();
@@ -98,10 +94,6 @@ public class Song implements Item {
         setTitle(newS.title);
     }
 
-    @Override
-    public void setImage(Bitmap image) {
-        album.setImage(image);
-    }
 
     public String getDuration() {
         return duration;
