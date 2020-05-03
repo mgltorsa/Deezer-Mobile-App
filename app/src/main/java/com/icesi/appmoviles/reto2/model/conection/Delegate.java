@@ -82,8 +82,8 @@ public class Delegate<T extends Item> {
                     T object=gson.fromJson(data,type);
                     item.copy(object);
                     response.addItemInList(item);
-
                 }
+
                 response.finishRequest();
             }catch (Exception e){
 

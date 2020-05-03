@@ -47,8 +47,7 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
         loading=findViewById(R.id.loading_song);
         loading.setBackgroundResource(R.drawable.loading);
         animation=(AnimationDrawable) loading.getBackground();
-        loading.setVisibility(View.VISIBLE);
-        animation.start();
+
         imagePlay=findViewById(R.id.image_play);
         namePlay=findViewById(R.id.name_play);
         descPlay=findViewById(R.id.desc_play);
@@ -75,6 +74,10 @@ public class SongListActivity extends AppCompatActivity implements Response<Song
         list.setAdapter(adapter);
         adapter.setList(playList.getTracks().getData());
         Type type=new TypeToken< Song >(){}.getType();
+
+        //getting songs
+        loading.setVisibility(View.VISIBLE);
+        animation.start();
         songListDelegate.getSongs(playList.getTracks().getData(),this,Song.ITEM_URL,type);
 
         list.setOnItemClickListener((parent, view, position, id) -> {
